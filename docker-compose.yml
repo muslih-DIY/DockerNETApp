@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+
+  reverseproxy:
+    image: nginx:test
+    ports:
+      - "80:80"
+    restart: always
+
+  testapi:
+    depends_on:
+      - reverseproxy
+    image: testdotnetapp_image
+    expose:
+      - "5000"
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+    restart: always
