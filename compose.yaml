@@ -22,8 +22,10 @@ services:
       - db
     ports:
       - "80:80"
-    restart: always
-
+      - "443:443"
+    volumes:
+      - /etc/nginx/ssl/certificate.crt:/etc/nginx/ssl/certificate.crt
+      - /etc/nginx/ssl/private.key:/etc/nginx/ssl/private.key
   testapi:
     depends_on:
       - db
