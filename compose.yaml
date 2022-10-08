@@ -35,18 +35,18 @@ services:
     volumes: 
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-    command: certonly --webroot -w /var/www/certbot --force-renewal --email muslih@gksinfotech.in -d test.onlinemagic.in  --agree-tos
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email ${CERT_MAIL} -d ${NGINX_DOMAIN}  --agree-tos
 
   testapi:
     depends_on:
       - db
       - reverseproxy
     container_name: frontend
-    image: dotnettest
+    build: ./TodoApi/
     expose:
-      - "5000"
+      - "${FRONTEND_PORT}"
     environment:
-      - ASPNETCORE_URLS=http://+:5000
+      - ASPNETCORE_URLS=${FRONTEND_URL}
     restart: always
 
 
